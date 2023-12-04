@@ -30,15 +30,38 @@ if (!empty($_SESSION['validation'])) {
     redirect('../../pages/registration.php');
 }
 
-$conn = new mysqli("localhost", "root", "1", "reg_form_homework");
-// Создание нового объекта класса mysqli для установления соединения с базой данных. В параметрах указывается
-// хост (localhost), имя пользователя (root), пароль (1) и имя базы данных (regformhomework).
-if ($conn->connect_error) { // Проверка подключения с условием.
-    die("Connection failed: " . $conn->connect_error); // Если была ошибка подключения, то скрипт останавливается,
-    // выводится сообщение "Connection failed: " и ошибка подключения.
-} else { // Если подключение прошло успешно, то выполняется следующий блок кода.
-    echo 'Мы успешно подключились' . PHP_EOL; // Ура, мы подключились и выполнили код далее по тексту.
+$pdo = getPDO();
+
+$query = "INSERT INTO `users` (`username`, `email`, `password`) VALUES (:username, :email, :password)";
+
+$params = [
+    'username' => $name,
+    'email' => $email,
+    'avatar' => $avatarPath,
+    'password' => password_hash($password, PASSWORD_DEFAULT)
+];
+
+$stmt = $pdo->prepare($query);
+
+try {
+    $stmt->execute($params);
+} catch (\Exception $e) {
+    die($e->getMessage());
 }
-$conn->query("INSERT INTO `users` (`username`, `email`, `password`) VALUES ('$_POST[username]', '$_POST[email]','$_POST[password]')");
-// Выполнение запроса к базе данных для вставки новой записи в таблицу users. Значения для полей указаны в скобках,
-// значения разделяются запятыми.
+
+redirect('/');
+
+
+
+//$conn = new mysqli("localhost", "root", "1", "reg_form_homework");
+//// Создание нового объекта класса mysqli для установления соединения с базой данных. В параметрах указывается
+//// хост (localhost), имя пользователя (root), пароль (1) и имя базы данных (regformhomework).
+//if ($conn->connect_error) { // Проверка подключения с условием.
+//    die("Connection failed: " . $conn->connect_error); // Если была ошибка подключения, то скрипт останавливается,
+//    // выводится сообщение "Connection failed: " и ошибка подключения.
+//} else { // Если подключение прошло успешно, то выполняется следующий блок кода.
+//    echo 'Мы успешно подключились' . PHP_EOL; // Ура, мы подключились и выполнили код далее по тексту.
+//}
+//$conn->query("INSERT INTO `users` (`username`, `email`, `password`) VALUES ('$_POST[username]', '$_POST[email]','$_POST[password]')");
+//// Выполнение запроса к базе данных для вставки новой записи в таблицу users. Значения для полей указаны в скобках,
+//// значения разделяются запятыми.
