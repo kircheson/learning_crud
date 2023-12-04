@@ -30,16 +30,12 @@ if (!empty($_SESSION['validation'])) {
     redirect('../../pages/registration.php');
 }
 
+//  Отправляем форму
 $pdo = getPDO();
 
-$query = "INSERT INTO `users` (`username`, `email`, `password`) VALUES (:username, :email, :password)";
+$query = "INSERT INTO users (`username`, `email`, `password`) VALUES (:username, :email, :password)";
 
-$params = [
-    'username' => $name,
-    'email' => $email,
-    'avatar' => $avatarPath,
-    'password' => password_hash($password, PASSWORD_DEFAULT)
-];
+$params = ['username' => $name,'email' => $email,'password' => password_hash($password, PASSWORD_DEFAULT)];
 
 $stmt = $pdo->prepare($query);
 
