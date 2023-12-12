@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . './../src/helper_functions.php';
-checkGuest();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,41 +23,27 @@ checkGuest();
         <form class="card" action="./../src/actions/register.php" method="post">
             <label class="container__form-label" for="username">
                 Имя
-
-                <?php if (hasValidationError('username')): ?>
-                    <small><?php echo validationErrorMessage('username'); ?></small>
-                <?php endif; ?>
             </label>
-            <input type="text" id="username" class="container__form-input" placeholder="Введите логин" name="username"
-                   value="<?php echo old('name') ?>"<?php echo validationErrorAttr('name'); ?>>
+            <input type="text" id="username" class="container__form-input" placeholder="Введите логин" name="username" required>
             <label class="container__form-label" for="email">
                 Почта
-                <?php if (hasValidationError('email')): ?>
-                    <small><?php echo validationErrorMessage('email'); ?></small>
-                <?php endif; ?>
             </label>
-            <input type="text" id="email" class="container__form-input" placeholder="Введите email" name="email"
-                   value="<?php echo old('email') ?>"<?php echo validationErrorAttr('email'); ?>>
+            <input type="text" id="email" class="container__form-input" placeholder="Введите email" name="email" required>
             <label class="container__form-label" for="password">
                 Пароль
-                <?php if (hasValidationError('password')): ?>
-                    <small><?php echo validationErrorMessage('password'); ?></small>
-                <?php endif; ?>
             </label>
-            <input type="password" id="password" class="container__form-input" placeholder="Введите пароль"
-                   name="password"<?php echo validationErrorAttr('password'); ?>>
-            <label class="container__form-label" for="password">
+            <input type="password" id="password" class="container__form-input" placeholder="Введите пароль" name="password" required>
+            <label class="container__form-label" for="password_confirmation">
                 Подтверждение
             </label>
-            <input type="password" id="password_confirmation" class="container__form-input"
-                   placeholder="Повторите пароль" name="password_confirmation">
+            <input type="password" id="password_confirmation" class="container__form-input" placeholder="Повторите пароль" name="password_confirmation" required>
 
             <input type="submit" id="submit" class="container__form-button" name="submit" value="Зарегистрироваться">
         </form>
     </div>
 
     <div class="container__registration">
-        <p>У меня уже есть <a href="../pages/profile.html">аккаунт</a></p>
+        <p>У меня уже есть <a href="../pages/login.php">аккаунт</a></p>
     </div>
 </div>
 </body>
